@@ -4,44 +4,44 @@ import react from "@vitejs/plugin-react";
 import * as esbuild from "esbuild";
 
 const sourceJSPattern = /\/src\/.*\.js$/;
-const rollupPlugin = matchers => ({
+const rollupPlugin = (matchers) => ({
   name: "js-in-jsx",
   load(id) {
-    if (matchers.some(matcher => matcher.test(id))) {
+    if (matchers.some((matcher) => matcher.test(id))) {
       const file = fs.readFileSync(id, { encoding: "utf-8" });
       return esbuild.transformSync(file, { loader: "jsx" });
     }
-  }
+  },
 });
 
 export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
-      plugins: [rollupPlugin([sourceJSPattern])]
+      plugins: [rollupPlugin([sourceJSPattern])],
     },
     commonjsOptions: {
-      transformMixedEsModules: true
-    }
+      transformMixedEsModules: true,
+    },
   },
   server: {
-    port: 3000
+    port: 3000,
   },
   optimizeDeps: {
     esbuildOptions: {
       loader: {
-        ".js": "jsx"
-      }
-    }
+        ".js": "jsx",
+      },
+    },
   },
   esbuild: {
     loader: "jsx",
     include: [sourceJSPattern],
-    exclude: []
+    exclude: [],
   },
-  define: {
-    // By default, Vite doesn't include shims for NodeJS/
-    // necessary for segment analytics lib to work
-    global: {}
-  }
+  // define: {
+  //   // By default, Vite doesn't include shims for NodeJS/
+  //   // necessary for segment analytics lib to work
+  //   global: {},
+  // },
 });
