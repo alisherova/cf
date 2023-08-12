@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import react from "vite-preset-react";
 import * as esbuild from "esbuild";
 
 const sourceJSPattern = /\/src\/.*\.js$/;
@@ -15,7 +15,7 @@ const rollupPlugin = (matchers) => ({
 });
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react({ removeDevtoolsInProd: true, injectReact: true })],
   base: "/cf/",
   build: {
     rollupOptions: {
