@@ -16,6 +16,7 @@ const rollupPlugin = (matchers) => ({
 
 export default defineConfig({
   plugins: [react()],
+  base: "/cf/",
   build: {
     rollupOptions: {
       plugins: [rollupPlugin([sourceJSPattern])],
